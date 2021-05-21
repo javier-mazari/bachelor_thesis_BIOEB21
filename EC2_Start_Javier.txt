@@ -1,0 +1,42 @@
+pip3 install mysql-connector-python --user
+pip3 install wget --user
+pip3 install boto3 --user
+pip3 install requests --user
+pip3 install ipython --user
+# Python debugger
+pip3 install ipdb --user
+pip3 install pdbpp --user
+updatedb && locate -e bench-repo --user
+pip3 install --upgrade setuptools --user
+pip3 install html5lib bs4 --user
+pip3 install fake_headers --user
+
+
+
+# retrieve paths of required scripts and add them to $PATH
+# possibly write into bashrc echo 'export PATH=$(find -name aws_local_cache_handler):$PATH' > ~/.bash_rc
+FINDCACHEPATH=$(locate -e -b '\aws_local_cache_handler')
+export PATH=$(echo "${FINDCACHEPATH%/*}/"):$PATH
+BESTPDBSCRIPT=$(locate -e -b  '\find_best_pdb_for_seqres_md5')
+export PATH=$(echo "${BESTPDBSCRIPT%/*}/"):$PATH
+
+export PATH=$(locate renumberpdb.pl):$PATH
+export PATH=$(locate hhmakemodel.py):$PATH
+
+# install PDBx Python Parser
+wget https://mmcif.wwpdb.org/docs/sw-examples/python/src/pdbx.tar.gz
+tar -xzf pdbx.tar.gz
+mv pdbx .local/lib/python3.7/site-packages/
+
+# install maxcluster64bit
+wget http://www.sbg.bio.ic.ac.uk/maxcluster/maxcluster64bit
+sudo chmod u+x maxcluster64bit
+./maxcluster64bit
+
+#install TMScore
+wget https://zhanglab.dcmb.med.umich.edu/TM-score/TMscore.gz
+gzip -d TMscore.gz
+sudo chmod u+x TMscore
+./TMscore
+
+
